@@ -50,7 +50,8 @@ prompt = "Vaccinated patients on ICU"
 prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU')
 lengthofstoryy = st.slider('length of story?', 10, 330, 100)
 topk = st.slider('amount of creativity?', 0, 130, 60)
-topp = st.slider('temprature of story?', 0, 130, 90)
+topp = st.slider('temprature of story?', 0, 130, 95)
+toppfloat = topp / 100
 
 if st.button('Ask the AI to complete the sentance'):
  if tokenizer != None :
@@ -58,9 +59,9 @@ if st.button('Ask the AI to complete the sentance'):
    try:
      inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
      prompt_length = len(tokenizer.decode(inputs[0]))
-     outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=True, top_p=0.95, top_k=60)
+     outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=True, top_p=0.95, top_k=topk)
      generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
-     st.header(generated)
+     st.subheader('GPT2 is generating this text..')
      st.text_area(label='Generated text' , value = generated)
      st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
      st.write('Successfully in generating text ')
@@ -69,9 +70,7 @@ if st.button('Ask the AI to complete the sentance'):
      st.write(e)
 
 
-context = st.text_area(label='context' , value ='Extractive Question Answering is the task of extracting an answer from a text given a question')
- 
-myquestion = st.text_area(label='question', value='What is extractive question answering?')
+
  
 
 
