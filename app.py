@@ -45,3 +45,11 @@ result = question_answerer(question=myquestion, context=context)
 
 st.write(result['answer'])
 
+
+unmasker2 = pipeline("fill-mask", model="microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract")
+resultsfillmask = unmasker2('vaccine induce [MASK] response', top_k=4)
+st.write(resultsfillmask[0]['sequence'])
+st.write(resultsfillmask[1]['sequence'])
+st.write(resultsfillmask[2]['sequence'])
+
+
