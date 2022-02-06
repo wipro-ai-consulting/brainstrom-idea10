@@ -37,7 +37,7 @@ if st.button('Ask the AI to complete the sentance'):
  inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
 
  prompt_length = len(tokenizer.decode(inputs[0]))
- outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=False, top_p=topp/100, top_k=topk)
+ outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=False, top_p=0.95, top_k=topk)
  generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
  st.header(generated)
  st.text_area(label='Generated text' , value = generated)
