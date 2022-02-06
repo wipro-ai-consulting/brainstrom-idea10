@@ -9,14 +9,28 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 tokenizer = None 
 model = None 
 
-try:
-  tokenizer = AutoTokenizer.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
-  model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
-  st.write('Success: loaded GPT-2-finetuned-covid-bio-medrxiv ')
-except:
-  st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')
+@st.cache
+def load_TokenizerCORD():
+  tokenizer = None 
+  try:
+    tokenizer = AutoTokenizer.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+    st.write('Success: loaded tokenizer GPT-2-finetuned-covid-bio-medrxiv ')
+  except:
+    st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')  
+  return tokenizer
 
+@st.cache
+def load_modelCORD():
+  model = None 
+  try:
+    model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+    st.write('Success: loaded GPT-2-finetuned-covid-bio-medrxiv ')
+  except:
+    st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')  
+  return model
 
+tokenizer = load_TokenizerCORD()
+model = load_modelCORD()
 
  
 st.title('The opportunity to strengthen GSK ecosystem of HCPs')
