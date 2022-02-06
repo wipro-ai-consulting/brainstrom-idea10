@@ -40,7 +40,7 @@ if st.button('Ask the AI to complete the sentance'):
  outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=False, top_p=0.95, top_k=topk)
  generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
  st.header(generated)
- st.text_area(label='Generated text' , value = generated)
+ st.text_area(label='Generated text' , value = 'generated')
  st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
 
 
