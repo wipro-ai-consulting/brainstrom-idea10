@@ -18,15 +18,14 @@ def load_TokenizerCORD():
     st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')  
   return tokenizer
 
-@st.cache(suppress_st_warning=True)
+@st.cache
 def load_modelCORD():
   model = None 
   try:
     model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
-    st.write('Success: loaded GPT-2-finetuned-covid-bio-medrxiv ')
   except:
-    st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')  
-  return model
+    model = None 
+return model
 
 tokenizer = load_TokenizerCORD()
 model = load_modelCORD()
