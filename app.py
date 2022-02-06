@@ -45,7 +45,7 @@ st.subheader('Hi HCP, i am a AI trained on a resource of over 500,000 scholarly 
 st.subheader('Start typing something about COVID, and i help you narrate a study/case/hypothesis to share with your peers !')
 
           
-prompt = "Vaccinated patients on ICU"
+prompt = "Characteristics of SARS-CoV-2 delta"
 
 prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU')
 lengthofstoryy = st.slider('length of story?', 10, 330, 100)
