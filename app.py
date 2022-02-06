@@ -59,7 +59,7 @@ topp = st.slider('temprature of story?', 0, 130, 95)
 toppfloat = topp / 100
 
 if st.button('Ask the AI to complete the sentance'):
- if modelselection  == 'General':
+ if modelselection  != 'General':
    if tokenizer != None :
     if model != None :
      try:
@@ -74,7 +74,7 @@ if st.button('Ask the AI to complete the sentance'):
      except Exception as e:  
        st.write('An exception occurred while generating text ')
        st.write(e)
-  else:
+ else:
    if tokenizer1 != None :
     if model1 != None :
      try:
