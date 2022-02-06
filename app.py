@@ -8,27 +8,33 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 tokenizer = None 
 model = None 
+tokenizer1 = None 
+model1 = None 
 
 def load_TokenizerCORD():
   tokenizer = None 
   try:
     tokenizer = AutoTokenizer.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+    tokenizer1 = AutoTokenizer.from_pretrained("distilgpt2")
+
     st.write('Success: loaded tokenizer GPT-2-finetuned-covid-bio-medrxiv ')
   except:
     st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')  
-  return tokenizer
+  return tokenizer, tokenizer1
 
 @st.cache
 def load_modelCORD():
   model = None 
   try:
     model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+    model1 = AutoModelForCausalLM.from_pretrained("distilgpt2")
+
   except:
     model = None 
-  return model
+  return model , model1
 
-tokenizer = load_TokenizerCORD()
-model = load_modelCORD()
+tokenizer, tokenizer1 = load_TokenizerCORD()
+model, model1 = load_modelCORD()
 
  
 st.title('The opportunity to strengthen GSK ecosystem of HCPs')
@@ -41,11 +47,10 @@ st.subheader('Hi doc, Discover an interactive e-learning powered by AI.  And mee
 st.image('https://www.singlegrain.com/wp-content/uploads/2021/04/SG-7-Ways-to-Leverage-AI-in-Social-Media-Marketing.jpg', width=200)
 
 
-st.subheader('Hi HCP, i am a AI trained on a resource of over 500,000 scholarly articles on COVID19')
-st.subheader('Start typing something about COVID, and i help you narrate a study/case/hypothesis to share with your peers !')
+st.subheader('Start typing something , and i help you narrate a study/case/hypothesis to share with your peers !')
 
           
-
+modelselection = st.radio(     "Choose a AI brain?",     ('General', 'One trained in COVID research'))
 
 prompt = st.text_area(label='context' , value ='Immunity of vaccinated')
 lengthofstoryy = st.slider('length of story?', 10, 330, 100)
@@ -54,21 +59,37 @@ topp = st.slider('temprature of story?', 0, 130, 95)
 toppfloat = topp / 100
 
 if st.button('Ask the AI to complete the sentance'):
- if tokenizer != None :
-  if model != None :
-   try:
-     inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
-     prompt_length = len(tokenizer.decode(inputs[0]))
-     outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=False, top_p=0.95, top_k=topk)
-     generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
-     st.subheader('GPT2 is generating this text..')
-     st.text_area(label='Generated text' , value = generated)
-     st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
-     st.write('Successfully in generating text ')
-   except Exception as e:  
-     st.write('An exception occurred while generating text ')
-     st.write(e)
-
+ if modelselection  == 'General':
+   if tokenizer != None :
+    if model != None :
+     try:
+       inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
+       prompt_length = len(tokenizer.decode(inputs[0]))
+       outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=False, top_p=0.95, top_k=topk)
+       generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
+       st.subheader('GPT2 is generating this text..')
+       st.text_area(label='Generated text' , value = generated)
+       st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
+       st.write('Successfully in generating text ')
+     except Exception as e:  
+       st.write('An exception occurred while generating text ')
+       st.write(e)
+  else:
+   if tokenizer1 != None :
+    if model1 != None :
+     try:
+       inputs = tokenizer1( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
+       prompt_length = len(tokenizer1.decode(inputs[0]))
+       outputs = model1.generate(inputs, max_length=lengthofstoryy, do_sample=False )
+       generated = prompt + tokenizer1.decode(outputs[0])[prompt_length + 1 :]
+       st.subheader('GPT2 is generating this text..')
+       st.text_area(label='Generated text' , value = generated)
+       st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
+       st.write('Successfully in generating text ')
+     except Exception as e:  
+       st.write('An exception occurred while generating text ')
+       st.write(e)
+    
 
 
  
