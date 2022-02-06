@@ -23,12 +23,12 @@ st.image('https://www.singlegrain.com/wp-content/uploads/2021/04/SG-7-Ways-to-Le
 
 
 st.subheader('Hi HCP, i am a AI trained on a resource of over 500,000 scholarly articles on COVID19')
-st.subheader('Start typing something about COVID, and i help you narrate a case to share with your peers !')
+st.subheader('Start typing something about COVID, and i help you narrate a study/case/hypothesis to share with your peers !')
 
           
 prompt = "Vaccinated patients on ICU"
 
-prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU')
+prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU ')
 lengthofstoryy = st.slider('length of story?', 10, 330, 10)
 topk = st.slider('amount of creativity?', 0, 130, 60)
 topp = st.slider('temprature of story?', 0, 130, 90)
