@@ -9,7 +9,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 tokenizer = None 
 model = None 
 
-@st.cache
 def load_TokenizerCORD():
   tokenizer = None 
   try:
