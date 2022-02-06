@@ -6,9 +6,16 @@ from transformers import AutoTokenizer
 from transformers import BigBirdPegasusForConditionalGeneration, AutoTokenizer
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-tokenizer = AutoTokenizer.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+tokenizer = None 
+model = None 
 
-model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+try:
+  tokenizer = AutoTokenizer.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+  model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
+  st.write('Success: loaded GPT-2-finetuned-covid-bio-medrxiv ')
+except:
+  st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')
+
 
 
  
@@ -28,20 +35,25 @@ st.subheader('Start typing something about COVID, and i help you narrate a study
           
 prompt = "Vaccinated patients on ICU"
 
-prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU ')
+prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU')
 lengthofstoryy = st.slider('length of story?', 10, 330, 100)
 topk = st.slider('amount of creativity?', 0, 130, 60)
 topp = st.slider('temprature of story?', 0, 130, 90)
 
 if st.button('Ask the AI to complete the sentance'):
- inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
-
- prompt_length = len(tokenizer.decode(inputs[0]))
- outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=True, top_p=0.95, top_k=60)
- generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
- st.header(generated)
- st.text_area(label='Generated text' , value = 'generated')
- st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
+ if tokenizer != None :
+  if model != None :
+   try:
+     inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
+     prompt_length = len(tokenizer.decode(inputs[0]))
+     outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=True, top_p=0.95, top_k=60)
+     generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
+     st.header(generated)
+     st.text_area(label='Generated text' , value = 'generated')
+     st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
+     st.write('Successfully in generating text ')
+   except:
+     st.write('An exception occurred while generating text ')
 
 
 context = st.text_area(label='context' , value ='Extractive Question Answering is the task of extracting an answer from a text given a question')
