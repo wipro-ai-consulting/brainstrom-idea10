@@ -45,20 +45,19 @@ st.subheader('Hi HCP, i am a AI trained on a resource of over 500,000 scholarly 
 st.subheader('Start typing something about COVID, and i help you narrate a study/case/hypothesis to share with your peers !')
 
           
-prompt = "Characteristics of SARS-CoV-2 delta"
 
-prompt = st.text_area(label='context' , value ='Immunity of vaccinated patients on ICU')
+
+prompt = st.text_area(label='context' , value ='Immunity of vaccinated')
 lengthofstoryy = st.slider('length of story?', 10, 330, 100)
 topk = st.slider('amount of creativity?', 0, 130, 60)
 topp = st.slider('temprature of story?', 0, 130, 95)
-addspecialtokens = st.checkbox('add special words?')
 toppfloat = topp / 100
 
 if st.button('Ask the AI to complete the sentance'):
  if tokenizer != None :
   if model != None :
    try:
-     inputs = tokenizer( prompt, add_special_tokens=addspecialtokens, return_tensors="pt")["input_ids"]
+     inputs = tokenizer( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
      prompt_length = len(tokenizer.decode(inputs[0]))
      outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=True, top_p=0.95, top_k=topk)
      generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
