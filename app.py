@@ -18,7 +18,7 @@ def load_TokenizerCORD():
     st.write('An exception occurred while loading AutoTokenizer AutoModelForCausalLM of GPT-2-finetuned-covid-bio-medrxiv ')  
   return tokenizer
 
-@st.cache
+@st.cache(suppress_st_warning=True)
 def load_modelCORD():
   model = None 
   try:
@@ -62,11 +62,12 @@ if st.button('Ask the AI to complete the sentance'):
      outputs = model.generate(inputs, max_length=lengthofstoryy, do_sample=True, top_p=0.95, top_k=60)
      generated = prompt + tokenizer.decode(outputs[0])[prompt_length + 1 :]
      st.header(generated)
-     st.text_area(label='Generated text' , value = 'generated')
+     st.text_area(label='Generated text' , value = generated)
      st.image('https://kolmite.com/wp-content/uploads/2018/12/Whatsapp-Share-Button-Comparte-en-whatsapp.png', width=200)
      st.write('Successfully in generating text ')
-   except:
+   except Exception as e:  
      st.write('An exception occurred while generating text ')
+     st.write(e)
 
 
 context = st.text_area(label='context' , value ='Extractive Question Answering is the task of extracting an answer from a text given a question')
