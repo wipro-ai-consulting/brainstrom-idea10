@@ -25,7 +25,7 @@ def load_modelCORD():
     model = AutoModelForCausalLM.from_pretrained("mrm8488/GPT-2-finetuned-covid-bio-medrxiv")
   except:
     model = None 
-return model
+  return model
 
 tokenizer = load_TokenizerCORD()
 model = load_modelCORD()
