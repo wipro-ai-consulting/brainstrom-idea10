@@ -53,14 +53,7 @@ myquestion = st.text_area(label='question', value='What is extractive question a
  
 
 
-          
-
-unmasker2 = pipeline("fill-mask", model="microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract")
-resultsfillmask = unmasker2('vaccine induce [MASK] response', top_k=4)
-st.write(resultsfillmask[0]['sequence'])
-st.write(resultsfillmask[1]['sequence'])
-st.write(resultsfillmask[2]['sequence'])
-
+     
 
 st.subheader('Learning about GSK products can be fun for Healthcare professionals ')
 
