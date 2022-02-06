@@ -80,7 +80,7 @@ if st.button('Ask the AI to complete the sentance'):
      try:
        inputs = tokenizer1( prompt, add_special_tokens=False, return_tensors="pt")["input_ids"]
        prompt_length = len(tokenizer1.decode(inputs[0]))
-       outputs = model1.generate(inputs, max_length=lengthofstoryy, do_sample=False )
+       outputs = model1.generate(inputs, max_length=lengthofstoryy, top_p=toppfloat , do_sample=False )
        generated = prompt + tokenizer1.decode(outputs[0])[prompt_length + 1 :]
        st.subheader('GPT2 is generating this text..')
        st.text_area(label='Generated text' , value = generated)
