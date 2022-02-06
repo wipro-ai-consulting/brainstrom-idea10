@@ -47,13 +47,6 @@ myquestion = st.text_area(label='question', value='What is extractive question a
 
 
           
-question_answerer = pipeline("question-answering")
-
-
-result = question_answerer(question=myquestion, context=context)
-
-st.write(result['answer'])
-
 
 unmasker2 = pipeline("fill-mask", model="microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract")
 resultsfillmask = unmasker2('vaccine induce [MASK] response', top_k=4)
